@@ -23,3 +23,10 @@ Roll back: `cp ~/.local/lib/antigravity/agy.previous.agyqemu ~/.local/lib/antigr
 
 ## Remove
     ./uninstall.sh
+
+## Use from T3 Code
+In T3 Code's Antigravity provider settings, set **Binary path** to `/home/<you>/.local/bin/agy`
+(the full path; T3's background service does not search `~/.local/bin`).
+- T3 then always starts this QEMU launcher. Do not use T3's own Antigravity install or update
+  button: it downloads the native build, which stops with SIGILL on this CPU.
+- T3 does not update a custom binary. Run `agy upgrade` in a terminal instead.
