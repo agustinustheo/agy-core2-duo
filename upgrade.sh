@@ -26,6 +26,7 @@ esac
 chmod +x "$scratch/agy.agyqemu"
 got=$("$scratch/agy.agyqemu" --version | tail -1)
 [[ "$got" == "$version" ]] || { echo "Test run printed '$got', expected $version. Nothing changed." >&2; exit 1; }
-[[ -f "$real" ]] && cp -f "$real" "$libexec/agy.previous.agyqemu"
+kept=""
+if [[ -f "$real" ]]; then cp -f "$real" "$libexec/agy.previous.agyqemu"; kept=" The old version is kept as $libexec/agy.previous.agyqemu"; fi
 mv -f "$scratch/agy.agyqemu" "$real"
-echo "agy $version is installed. The old version is kept as $libexec/agy.previous.agyqemu"
+echo "agy $version is installed.$kept"
