@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# binfmt_misc interpreter for "*.agyqemu" files.
+# The kernel calls: agy-qemu <path-to-binary> <arguments...>
+# If agy starts itself again, that child also comes here.
+set -euo pipefail
+root=$(dirname "$(dirname "$(readlink -f -- "${BASH_SOURCE[0]}")")")
+qemu="$root/tools/qemu/usr/bin/qemu-x86_64"
+[[ -x "$qemu" ]] || { echo "Missing QEMU. Run: bash $root/setup.sh" >&2; exit 1; }
+# A self-update would install a native binary, which stops with SIGILL on this CPU.
+export AGY_CLI_DISABLE_AUTO_UPDATE=true
+exec "$qemu" -cpu max "$@"
